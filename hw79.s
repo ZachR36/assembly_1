@@ -3,8 +3,22 @@
     .globl relation_code
     .type relation_code, @function
 relation_code:
-    # TODO: Problem 1
     movq $0, %rax
+    cmpq %rsi, %rdi
+    jge signed_not_smaller
+    addq $1, %rax
+    cmpq %rsi, %rdi
+    jae unsigned_not_smaller
+    addq $2, %rax
+    jmp relation_done
+
+signed_not_smaller:
+    jae unsigned_not_smaller
+    addq $2, %rax
+    jmp relation_done
+unsigned_not_smaller:
+    jmp relation_done
+relation_done:
     ret
 
     .globl clamp_long
