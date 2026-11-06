@@ -68,9 +68,26 @@ weighted_sum8:
     .globl alternating_sum
     .type alternating_sum, @function
 alternating_sum:
-    # TODO: Problem 4
     movq $0, %rax
+    movq $1, %rsi
+    cmpq $0, %rdi
+    jg odd_case
+    ret # If it's already 0, just return 0
+odd_case:
+    addq %rsi, %rax
+    addq $1, %rsi
+    cmpq %rsi, %rdi
+    jge even_case
+    jmp sum_complete
+even_case:
+    subq %rsi, %rax
+    addq $1, %rsi
+    cmpq %rsi, %rdi
+    jge odd_case
+    jmp sum_complete
+sum_complete:
     ret
+
 
     .globl recursive_power
     .type recursive_power, @function
