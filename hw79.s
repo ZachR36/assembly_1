@@ -45,8 +45,24 @@ clamp_done:
     .globl weighted_sum8
     .type weighted_sum8, @function
 weighted_sum8:
-    # TODO: Problem 3
     movq $0, %rax
+    addq %rdi, %rax
+    imulq $2, %rsi
+    addq %rsi, %rax
+    imulq $3, %rdx
+    addq %rdx, %rax
+    imulq $4, %rcx
+    addq %rcx, %rax
+    imulq $5, %r8
+    addq %r8, %rax
+    imulq $6, %r9
+    addq %r9, %rax
+    movq 8(%rsp), %rdi
+    imulq $7, %rdi
+    addq %rdi, %rax
+    movq 16(%rsp), %rdi
+    imulq $8, %rdi
+    addq %rdi, %rax
     ret
 
     .globl alternating_sum
