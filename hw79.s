@@ -24,8 +24,22 @@ relation_done:
     .globl clamp_long
     .type clamp_long, @function
 clamp_long:
-    # TODO: Problem 2
     movq $0, %rax
+    cmpq %rsi, %rdi
+    jl x_lower
+    cmpq %rdx, %rdi
+    jg x_higher
+    jmp neither
+x_lower:
+    movq %rsi, %rax
+    jmp clamp_done
+x_higher:
+    movq %rdx, %rax
+    jmp clamp_done
+neither:
+    movq %rdi, %rax
+    jmp clamp_done
+clamp_done:
     ret
 
     .globl weighted_sum8
