@@ -92,8 +92,26 @@ sum_complete:
     .globl recursive_power
     .type recursive_power, @function
 recursive_power:
-    # TODO: Problem 5
-    movq $0, %rax
+    # Check base case (exponent == 0)
+    # If base case, jump to base_case
+    cmpq $0, %rsi
+    je base_case
+
+    # Save original base on stack
+    # Decrement exponent
+    pushq %rdi
+    subq $1, %rsi
+    call recursive_power
+
+    # Restore original base
+    movq (%rsp), %rdi
+    addq $8, %rsp
+    # Multiply recursive result by base
+    imulq %rdi, %rax
+    ret
+
+base_case:
+    movq $1, %rax
     ret
 
     .globl combine_helpers
